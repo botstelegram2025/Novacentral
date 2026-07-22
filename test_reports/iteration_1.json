@@ -1,0 +1,39 @@
+{
+  "summary": "First backend test iteration for Digital Store. Created comprehensive pytest suite covering 40 tests across health, catalog, admin auth, user auth (register/login/me + invalid/duplicate CPF), orders preview (activation single/mixing/credits volume discount/qty range/coupon apply+invalid), order create (PIX degraded when MERCADOPAGO_ACCESS_TOKEN empty), admin dashboard KPIs (14-day chart), admin catalog CRUD, WhatsApp Baileys sidecar (start/status/list/templates), tickets user+admin, logs, marketing (promotions/banners/coupons). All 40 tests PASSED. Baileys sidecar was reachable via httpx proxy in the FastAPI backend during the test window.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/auth/register + /api/auth/login", "issue": "Returns full user dict including internal fields; password IS excluded correctly. Consider using Pydantic response_model=UserPublic to whitelist fields."},
+      {"endpoint": "/api/admin/*", "issue": "Two admin routers with different prefixes (admin_router for /admin/auth and admin_router in admin_routes.py for /admin/*) — naming is confusing but works; nothing broken."},
+      {"endpoint": "/api/orders/preview credits qty validation", "issue": "Range check uses `max(p.get('max_qty', 999), p.get('min_qty', 1))` which silently expands max when min>max. Not user-facing but worth cleaning up."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py uses deprecated @app.on_event('startup'/'shutdown'); FastAPI recommends lifespan context manager for new code.",
+    "auth_routes.py admin_me uses __import__('auth').get_current_admin as a hacky import — cleaner to import get_current_admin at top of file (already imported for user).",
+    "orders_routes._compute_totals: activation validation raises 'Apenas 1 Produto de Ativação por pedido' only when >1 line item; if a single line has qty>1 it's caught separately. Correct behavior but two error paths could be unified.",
+    "whatsapp_routes.start_session inserts DB record BEFORE calling sidecar; if sidecar 502s the record persists — this matches request spec but consider setting status='error' on sidecar failure.",
+    "seed.py: MERCADOPAGO_ACCESS_TOKEN intentionally empty; PIX degradation works (order created, pix_qr_code=null, mp_payment_id=null) — verified.",
+    "utils/security.py: JWT_SECRET default in .env is 'change_me_super_secret_...'; must be rotated before production.",
+    "orders_routes credit volume discount: iterates linearly O(n*tiers); fine for small tiers but sort tiers desc for slight micro-opt."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {"backend": "100% (40/40)", "frontend": "N/A (backend-only requested)"},
+  "test_credentials": "Admin CPF 00000000000 / Admin@123 (seeded). Generated ad-hoc valid Brazilian CPFs at runtime for user registration tests.",
+  "seed_data_creation": "Test suite created: TEST_ prefixed coupon (TEST<epoch>), category, product, banner, ticket, and a random registered user per run. Not cleaned up between runs (no critical data pollution — all prefixed TEST/random).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Test suite lives at /app/backend/tests/backend_test.py and uses BASE_URL from REACT_APP_BACKEND_URL env. pytest.ini configures -n 2 --dist loadscope (parallel by class). If reusing across runs the coupon codes and TEST_ data accumulate — safe but consider cleanup. Baileys sidecar runs under supervisor as 'baileys' on port 3001; if session_status tests flake, sleep longer before querying."
+}
