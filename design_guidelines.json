@@ -1,0 +1,135 @@
+{
+  "theme": "dark-first-premium",
+  "typography": {
+    "headings": {
+      "font": "Outfit",
+      "classes": "font-bold tracking-tight text-white",
+      "h1": "text-4xl sm:text-5xl lg:text-6xl leading-none",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl leading-tight",
+      "h3": "text-xl sm:text-2xl leading-snug",
+      "h4": "text-lg sm:text-xl"
+    },
+    "body": {
+      "font": "Manrope",
+      "classes": "text-zinc-400 font-medium leading-relaxed text-base sm:text-sm"
+    },
+    "labels": {
+      "classes": "text-xs font-bold uppercase tracking-[0.2em] text-zinc-500"
+    },
+    "mono": {
+      "font": "JetBrains Mono",
+      "classes": "font-mono text-sm"
+    }
+  },
+  "colors": {
+    "background": "#09090b",
+    "surface": "#18181b",
+    "surface_elevated": "#27272a",
+    "primary": "#3b82f6",
+    "primary_hover": "#60a5fa",
+    "success": "#10b981",
+    "warning": "#f59e0b",
+    "danger": "#ef4444",
+    "text_primary": "#ffffff",
+    "text_secondary": "#a1a1aa",
+    "border": "#27272a"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-[#09090b]/80 border-b border-white/10",
+    "cards": "bg-[#18181b] border border-white/5 rounded-xl shadow-lg",
+    "glow": "drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]",
+    "buttons": "rounded-full font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg active:translate-y-0"
+  },
+  "component_name": {
+    "navigation": "Sticky Header with Glassmorphism",
+    "hero": "Hero Section with Abstract Tech Background Overlay",
+    "product_card": "Minimalist Product Card with Quick Actions",
+    "dashboard_widget": "High-Density Admin Widget with Recharts",
+    "data_table": "Dense Data Table with Sticky Headers and Pagination",
+    "pix_checkout": "PIX QR Code Display with Copy-Paste Action",
+    "whatsapp_status": "WhatsApp Session Badge Indicator"
+  },
+  "grids": {
+    "storefront_promo": "grid grid-cols-1 md:grid-cols-12 gap-6 (Bento style for banners)",
+    "product_list": "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6",
+    "admin_dashboard": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4",
+    "checkout_split": "grid grid-cols-1 lg:grid-cols-12 gap-8 (Order summary col-span-7, Payment col-span-5)"
+  },
+  "layouts": {
+    "storefront": "Top Navigation (Sticky) -> Hero/Banners -> Left Sidebar (Filters) + Right Content (Products) -> Generous Footer",
+    "admin_panel": "Collapsible Left Sidebar -> Top Nav (User/Notifications) -> Dashboard Content (F-pattern prioritizing KPIs)",
+    "checkout": "Focused checkout layout (minimal nav) to prevent distractions",
+    "spacing_scale": "Use p-6 or p-8 for standard padding inside cards, p-4 for high-density admin tables."
+  },
+  "motion": {
+    "hover_states": "transition-all duration-200 ease-in-out",
+    "page_transitions": "opacity 0.3s ease",
+    "modals": "scale 0.95 to 1.0 with fade in",
+    "toast": "slide in from bottom right"
+  },
+  "accessibility": {
+    "contrast": "APCA and WCAG AA compliance. Ensure text on primary button is white, and text on warning is black.",
+    "focus": "focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-offset-2 focus:ring-offset-[#09090b]",
+    "aria": "Use aria-label for icon buttons. aria-hidden=true for decorative elements.",
+    "testing": "All interactive and key informational elements MUST include a data-testid attribute in kebab-case."
+  },
+  "media": {
+    "icons": "lucide-react (Standard, uniform strokes)",
+    "charts": "recharts (for Admin Dashboard)",
+    "alerts": "sonner (for real-time notifications like PIX received)"
+  },
+  "3d_libraries": {
+    "recommendation": "Use framer-motion for smooth 2D layout transitions and micro-interactions. No complex 3D required to keep checkout and admin fast and accessible."
+  },
+  "image_urls": [
+    {
+      "url": "https://images.unsplash.com/photo-1780764818910-80526d8aeb6d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGRpZ2l0YWwlMjBnbG93aW5nJTIwY29kZSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNzg0NjkyNDI4fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Abstract out-of-focus city lights and reflections on a rainy night",
+      "category": "Hero Background / Banners"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1638561186238-3227892dbc18?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwzfHxnYW1pbmclMjBnaWZ0JTIwY2FyZCUyMG9yJTIwc29mdHdhcmUlMjBsaWNlbnNlJTIwZ3JhcGhpY3xlbnwwfHx8fDE3ODQ2OTI0Mjh8MA&ixlib=rb-4.1.0&q=85",
+      "description": "A close up of a pink object with the word gaming on it",
+      "category": "Product Placeholder - Gaming / Activations"
+    },
+    {
+      "url": "https://images.pexels.com/photos/27141316/pexels-photo-27141316.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Close-up of a digital interface showcasing futuristic graphs and data analytics in low light",
+      "category": "Admin Dashboard Banner / Login Background"
+    }
+  ],
+  "component_path": "/app/frontend/src/components/ui",
+  "instructions_to_main_agent": [
+    "Build the UI focusing strictly on the provided Next.js/React + FastAPI + MongoDB architecture, adapted from Node/PostgreSQL.",
+    "Implement CPF Login and Registration cleanly with validation.",
+    "Implement two main categories for products: 'Produtos de Ativação' (Activation) and 'Produtos de Créditos' (Credits).",
+    "Cart logic: Activation items allow ONLY 1 unit. You CANNOT mix Activation and Credit products in the same cart. Credit items can have multiple quantities.",
+    "Implement PIX integration: Display QR Code clearly on checkout, provide a 'Copiar Código' button, and use 'sonner' to toast when payment is confirmed via webhook.",
+    "Implement Real-time notifications via toast/badge.",
+    "Admin Dashboard must have F-pattern layout, showing metrics (Users, Orders, Daily/Weekly/Monthly/Annual Revenue) prominently.",
+    "Include a specific view for WhatsApp Baileys integration: QR code scan, session status, and message templates ({nome}, {cpf}, etc).",
+    "Ensure the store is fully responsive (desktop, tablet, mobile, smart TV), utilizing Tailwind grid classes.",
+    "All text and currencies must be localized to pt-BR (R$).",
+    "Include specific custom fields per product type: MAC, Email, Senha, Login, Chave, Serial, Código, Token, Licença, Observações.",
+    "Use data-testid on every button, input, and critical UI element for testing."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use 'sonner' for toasts. Sonner component are located in /app/src/components/ui/sonner.tsx.",
+    "DO NOT use complete transparent background in header, overlays, any surface that has content under it. Example: Dropdown with transparent background.",
+    "Always add GENERAL UI UX DESIGN GUIDELINES. All interactive and key informational elements MUST include a data-testid attribute to facilitate robust automated testing."
+  ]
+}
