@@ -20,7 +20,7 @@ export default function AdminBanners() {
   const [editId, setEditId] = useState(null);
 
   const load = () => api.get("/marketing/banners").then(r => setItems(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const submit = async () => {
     try {

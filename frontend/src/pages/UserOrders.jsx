@@ -17,7 +17,7 @@ export default function UserOrders() {
     setLoading(true);
     api.get("/orders/mine").then(r => setOrders(r.data)).finally(() => setLoading(false));
   };
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const checkPayment = async (oid) => {
     try {

@@ -11,7 +11,7 @@ export default function AdminTickets() {
   const [tickets, setTickets] = useState([]);
   const [reply, setReply] = useState({});
   const load = () => api.get("/admin/tickets").then(r => setTickets(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const send = async (id) => { try { await api.post(`/admin/tickets/${id}/reply`, { message: reply[id] }); toast.success("Enviado"); setReply({ ...reply, [id]: "" }); load(); } catch { toast.error("Erro"); } };
   const close = async (id) => { await api.patch(`/admin/tickets/${id}/status`, { status: "closed" }); load(); };

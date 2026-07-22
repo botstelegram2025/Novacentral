@@ -15,7 +15,7 @@ export default function UserSupport() {
   const [reply, setReply] = useState({});
 
   const load = () => api.get("/tickets/mine").then(r => setTickets(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const open = async (e) => {
     e.preventDefault();

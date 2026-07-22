@@ -20,7 +20,7 @@ export default function AdminCategories() {
   const [editId, setEditId] = useState(null);
 
   const load = () => api.get("/catalog/categories").then(r => setItems(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const submit = async () => {
     try {
