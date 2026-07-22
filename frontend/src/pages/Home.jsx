@@ -1,104 +1,67 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Layout from "../components/Layout";
-import ProductCard from "../components/ProductCard";
 import { Button } from "../components/ui/button";
-import { api } from "../lib/api";
-import { ArrowRight, Zap, Shield, Clock, Sparkles } from "lucide-react";
+import { LogIn, UserPlus, Shield } from "lucide-react";
 
-const HERO_BG = "https://images.unsplash.com/photo-1780764818910-80526d8aeb6d?crop=entropy&cs=srgb&fm=jpg&w=1600&q=85";
+const LOGO = "https://customer-assets-39nsmqrw.emergentagent.net/job_digital-marketplace-492/artifacts/4meslmcu_1784720554756.png";
 
 export default function Home() {
-  const [featured, setFeatured] = useState([]);
-  const [promos, setPromos] = useState([]);
-
-  useEffect(() => {
-    api.get("/catalog/products", { params: { featured: true, limit: 8 } }).then(r => setFeatured(r.data)).catch(() => {});
-    api.get("/catalog/products", { params: { promo: true, limit: 4 } }).then(r => setPromos(r.data)).catch(() => {});
-  }, []);
-
   return (
-    <Layout>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <img src={HERO_BG} alt="" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-20 md:py-32 grid md:grid-cols-12 gap-10 items-center">
-          <div className="md:col-span-7">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-semibold text-blue-300 mb-6">
-              <Sparkles className="w-3.5 h-3.5" /> Entrega automática via PIX
-            </div>
-            <h1 className="heading text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight mb-6">
-              Produtos digitais<br />entregues em <span className="text-blue-400">segundos</span>.
-            </h1>
-            <p className="text-zinc-400 text-base sm:text-lg max-w-xl mb-8 leading-relaxed">
-              Ativações, licenças e créditos com pagamento aprovado em tempo real. Sem burocracia. Sem espera.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link to="/loja"><Button data-testid="hero-cta-loja" size="lg" className="rounded-full bg-blue-500 hover:bg-blue-400 text-white btn-glow px-8 h-12 font-semibold">
-                Explorar loja <ArrowRight className="w-4 h-4 ml-2" />
-              </Button></Link>
-              <Link to="/cadastro"><Button data-testid="hero-cta-cadastro" size="lg" variant="ghost" className="rounded-full h-12 border border-white/10 hover:bg-white/5">
-                Criar conta
-              </Button></Link>
-              <Link to="/admin/login"><Button data-testid="hero-cta-admin" size="lg" variant="ghost" className="rounded-full h-12 text-zinc-500 hover:text-white">
-                Painel Administrativo
-              </Button></Link>
-            </div>
-          </div>
-          <div className="md:col-span-5 hidden md:block">
-            <div className="grid grid-cols-2 gap-4">
-              {[{ i: Zap, t: "PIX Instantâneo", d: "Aprovação em segundos" },
-                { i: Shield, t: "100% Seguro", d: "Mercado Pago oficial" },
-                { i: Clock, t: "24/7", d: "Entrega automática" },
-                { i: Sparkles, t: "Suporte VIP", d: "WhatsApp direto" }].map((it, i) => (
-                <div key={i} className="card-elev p-5 hover:border-blue-500/30 transition-colors">
-                  <it.i className="w-6 h-6 text-blue-400 mb-3" />
-                  <div className="heading font-semibold mb-1">{it.t}</div>
-                  <div className="text-xs text-zinc-500">{it.d}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-10">
+      {/* Ambient background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.18),transparent_45%),radial-gradient(circle_at_80%_80%,rgba(249,115,22,0.10),transparent_45%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.4))]" />
+      </div>
 
-      {/* Featured */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <div className="text-xs font-bold uppercase tracking-[0.2em] text-blue-400 mb-2">Destaques</div>
-            <h2 className="heading text-2xl sm:text-3xl font-bold">Produtos em destaque</h2>
-          </div>
-          <Link to="/loja" className="text-sm text-zinc-400 hover:text-white flex items-center gap-1" data-testid="featured-see-all">
-            Ver todos <ArrowRight className="w-4 h-4" />
+      <div className="w-full max-w-2xl mx-auto text-center relative">
+        {/* Soft halo behind logo */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] max-w-full rounded-full bg-blue-500/10 blur-3xl -z-10" aria-hidden />
+
+        <img
+          src={LOGO}
+          alt="MARKIMAGEM TV — Ativações e Créditos Streaming"
+          className="w-full max-w-md sm:max-w-lg mx-auto mb-10 sm:mb-14 animate-float drop-shadow-[0_20px_60px_rgba(59,130,246,0.35)]"
+          data-testid="home-logo"
+        />
+
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+          <Link to="/login" className="w-full sm:w-auto">
+            <Button
+              data-testid="home-login-btn"
+              size="lg"
+              className="w-full sm:w-auto rounded-full bg-blue-500 hover:bg-blue-400 text-white btn-glow h-12 px-8 font-semibold"
+            >
+              <LogIn className="w-4 h-4 mr-2" /> Entrar
+            </Button>
+          </Link>
+
+          <Link to="/cadastro" className="w-full sm:w-auto">
+            <Button
+              data-testid="home-register-btn"
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto rounded-full h-12 px-8 font-semibold border-white/15 hover:bg-white/5"
+            >
+              <UserPlus className="w-4 h-4 mr-2" /> Criar Conta
+            </Button>
+          </Link>
+
+          <Link to="/admin/login" className="w-full sm:w-auto">
+            <Button
+              data-testid="home-admin-btn"
+              size="lg"
+              variant="ghost"
+              className="w-full sm:w-auto rounded-full h-12 px-8 font-semibold text-zinc-400 hover:text-white hover:bg-white/5"
+            >
+              <Shield className="w-4 h-4 mr-2" /> Painel Administrativo
+            </Button>
           </Link>
         </div>
-        {featured.length === 0 ? (
-          <div className="text-center text-zinc-500 py-12">Sem produtos em destaque no momento.</div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {featured.map((p) => <ProductCard key={p.id} p={p} />)}
-          </div>
-        )}
-      </section>
 
-      {/* Promos */}
-      {promos.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-red-400 mb-2">Promoção</div>
-              <h2 className="heading text-2xl sm:text-3xl font-bold">Ofertas por tempo limitado</h2>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {promos.map((p) => <ProductCard key={p.id} p={p} />)}
-          </div>
-        </section>
-      )}
-    </Layout>
+        <div className="text-[11px] uppercase tracking-[0.3em] text-zinc-600 mt-14">
+          Ativações • Créditos • Streaming
+        </div>
+      </div>
+    </div>
   );
 }

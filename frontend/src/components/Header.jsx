@@ -42,10 +42,11 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center gap-4">
         <Link to="/" className="flex items-center gap-2 group" data-testid="brand-link">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center btn-glow group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <span className="heading text-lg font-bold tracking-tight">Digital<span className="text-blue-400">.</span>Store</span>
+          <img
+            src="https://customer-assets-39nsmqrw.emergentagent.net/job_digital-marketplace-492/artifacts/4meslmcu_1784720554756.png"
+            alt="MARKIMAGEM TV"
+            className="h-9 sm:h-10 w-auto object-contain group-hover:opacity-90 transition-opacity"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 ml-6">
