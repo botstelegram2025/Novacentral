@@ -1,8 +1,10 @@
 import os
 import logging
 from pathlib import Path
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, JSONResponse
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")
@@ -55,11 +57,35 @@ app.add_middleware(
 )
 
 
+# ============================================================
+# Serve the React frontend build in production (single-service
+# monolithic deploy on Northflank / Docker). If FRONTEND_DIST is
+# not set or the directory does not exist, this block is skipped.
+# ============================================================
+FRONTEND_DIST = os.environ.get("FRONTEND_DIST", "")
+if FRONTEND_DIST and os.path.isdir(FRONTEND_DIST):
+    static_dir = os.path.join(FRONTEND_DIST, "static")
+    if os.path.isdir(static_dir):
+        app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def spa_fallback(full_path: str, request: Request):
+        # Never intercept API routes
+        if full_path.startswith("api/") or full_path == "api":
+            return JSONResponse({"detail": "Not Found"}, status_code=404)
+        candidate = os.path.join(FRONTEND_DIST, full_path)
+        if full_path and os.path.isfile(candidate):
+            return FileResponse(candidate)
+        return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
+
+    logger.info("Serving frontend from %s", FRONTEND_DIST)
+
+
 @app.on_event("startup")
 async def on_startup():
     await ensure_indexes()
     await seed()
-    logger.info("Digital Store API up. Mongo=%s db=%s", os.environ.get("MONGO_URL"), os.environ.get("DB_NAME"))
+    logger.info("API up. Mongo=%s db=%s", os.environ.get("MONGO_URL"), os.environ.get("DB_NAME"))
 
 
 @app.on_event("shutdown")

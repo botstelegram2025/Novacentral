@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_BACKEND_URL: ""
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      PORT: 8001
+      MONGO_URL: mongodb://mongo:27017
+      DB_NAME: markimagem
+      APP_NAME: "MARKIMAGEM TV"
+      CORS_ORIGINS: "*"
+      JWT_SECRET: dev_jwt_secret_change_me
+      JWT_REFRESH_SECRET: dev_refresh_secret_change_me
+      JWT_ACCESS_MINUTES: "60"
+      JWT_REFRESH_DAYS: "7"
+      ADMIN_CPF: "00000000000"
+      ADMIN_PASSWORD: "Admin@123"
+      ADMIN_NAME: "Super Admin"
+      MERCADOPAGO_ACCESS_TOKEN: ""
+      MERCADOPAGO_PUBLIC_KEY: ""
+      WHATSAPP_WEBHOOK_TOKEN: dev_wa_token
+    ports:
+      - "8001:8001"
+    volumes:
+      - app_uploads:/app/backend/uploads
+      - app_wa_sessions:/app/whatsapp-sidecar/sessions
+
+volumes:
+  mongo_data:
+  app_uploads:
+  app_wa_sessions:
