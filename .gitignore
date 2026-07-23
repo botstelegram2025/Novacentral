@@ -53,3 +53,10 @@ dist
 *.tsbuildinfo
 frontend/node_modules/.cache/default-development/8.pack
 frontend/node_modules/.cache/default-development/5.pack
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
