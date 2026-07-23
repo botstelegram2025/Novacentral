@@ -3,8 +3,10 @@
 # ================================
 FROM node:20-alpine AS frontend
 WORKDIR /app/frontend
-COPY frontend/package.json frontend/yarn.lock ./
-RUN yarn install --frozen-lockfile --network-timeout 600000
+# yarn.lock é opcional — se não estiver no repo, yarn cria um novo durante install.
+# O bracket [k] transforma o padrão em glob que casa 0..1 arquivo (não falha se ausente).
+COPY frontend/package.json frontend/yarn.loc[k] ./
+RUN yarn install --network-timeout 600000
 COPY frontend/ ./
 # Empty string => same-origin (/api) — perfect for monolithic deploy
 ARG REACT_APP_BACKEND_URL=""
@@ -18,9 +20,9 @@ RUN yarn build
 # ================================
 FROM node:20-alpine AS baileys
 WORKDIR /app/whatsapp-sidecar
-COPY whatsapp-sidecar/package*.json ./
+COPY whatsapp-sidecar/package.json whatsapp-sidecar/package-loc[k].json ./
 RUN npm install --omit=dev --no-audit --no-fund
-COPY whatsapp-sidecar/ ./
+COPY whatsapp-sidecar/server.js ./
 
 # ================================
 # Stage 3 — Runtime (Python + Node)
