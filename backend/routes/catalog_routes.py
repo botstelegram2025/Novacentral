@@ -99,7 +99,9 @@ async def list_products(
 
     docs = await products.find(filt, {"_id": 0}).sort(sort_field, sort_dir).to_list(limit)
     # attach category kind
-    cat_map = {c["id"]: c for c in await categories.find({}, {"_id": 0}).to_list(1000)}
+    cat_map = {c["id"]: c for c in await categories.find(
+        {}, {"_id": 0, "id": 1, "name": 1, "kind": 1}
+    ).limit(200).to_list(200)}
     for d in docs:
         c = cat_map.get(d.get("category_id"))
         d["category"] = {"id": c["id"], "name": c["name"], "kind": c["kind"]} if c else None

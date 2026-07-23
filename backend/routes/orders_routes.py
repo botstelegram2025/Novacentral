@@ -23,10 +23,17 @@ async def _compute_totals(items_input, coupon_code, user):
         raise HTTPException(400, "Carrinho vazio")
     # Fetch products
     ids = [i.product_id for i in items_input]
-    prods = {p["id"]: p for p in await products.find({"id": {"$in": ids}}, {"_id": 0}).to_list(len(ids))}
+    prods = {p["id"]: p for p in await products.find(
+        {"id": {"$in": ids}},
+        {"_id": 0, "id": 1, "name": 1, "price": 1, "promo_price": 1, "category_id": 1,
+         "custom_fields": 1, "min_qty": 1, "max_qty": 1, "volume_discount": 1,
+         "image": 1, "sku": 1}
+    ).to_list(len(ids))}
     if len(prods) != len(set(ids)):
         raise HTTPException(400, "Produto inexistente no carrinho")
-    cats = {c["id"]: c for c in await categories.find({}, {"_id": 0}).to_list(1000)}
+    cats = {c["id"]: c for c in await categories.find(
+        {}, {"_id": 0, "id": 1, "name": 1, "kind": 1}
+    ).limit(200).to_list(200)}
 
     # Validate mixing rules
     kinds = set()
@@ -166,7 +173,10 @@ async def create_order(inp: CreateOrderInput, request: Request, user=Depends(get
 
 @router.get("/mine")
 async def my_orders(user=Depends(get_current_user)):
-    docs = await orders.find({"user_id": user["id"]}, {"_id": 0}).sort("created_at", -1).to_list(200)
+    docs = await orders.find(
+        {"user_id": user["id"]},
+        {"_id": 0}
+    ).sort("created_at", -1).limit(50).to_list(50)
     return docs
 
 

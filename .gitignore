@@ -19,11 +19,10 @@ venv
 htmlcov
 
 # ==== Secrets ====
-.env
+# NOTE: .env files with placeholders são versionados (Emergent/Northflank
+# sobrescrevem via UI). Nunca commit valores reais de produção aqui.
 .env.local
 .env.*.local
-backend/.env
-frontend/.env
 !/.env.example
 
 # ==== Sensitive / local dev ====
