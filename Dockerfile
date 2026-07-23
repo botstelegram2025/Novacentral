@@ -50,7 +50,8 @@ COPY --from=baileys /app/whatsapp-sidecar /app/whatsapp-sidecar
 COPY --from=frontend /app/frontend/build /app/frontend_build
 
 # Supervisor + entrypoint
-COPY scripts/supervisord.conf /etc/supervisord.conf
+RUN mkdir -p /etc/supervisor/conf.d
+COPY scripts/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Persistent dirs
 RUN mkdir -p /app/backend/uploads /app/whatsapp-sidecar/sessions /app/logs
@@ -66,4 +67,4 @@ EXPOSE 8001
 
 # tini as PID 1 so supervisord forwards signals cleanly
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
